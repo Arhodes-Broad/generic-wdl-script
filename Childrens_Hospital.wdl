@@ -4,8 +4,9 @@
 ##
 ## Requirements/expectations :
 ## - Updated docker version, Current version is: duplexa/xteab:v3
-## - Two input files: sample_id.txt and either illumina_bam_list.txt or 10X_bam_list.txt 
-## 
+## - Two sample input files: sample_id.txt and either illumina_bam_list.txt or 10X_bam_list.txt 
+## - Two reference input files: hg19_decoy.tar.gz, rep_lib_annotation.tar.gz
+
 ## Outputs :
 ## - A script file that is then run on the docker to produce a table candidate_disc_filtered_cns.txt
 ##
@@ -29,8 +30,8 @@
 workflow genericworkflow {
 
   String? docker_override
-  String docker = select_first([docker_override, "ubuntu:14.04"])
-
+#  String docker = select_first([docker_override, "ubuntu:14.04"])
+  String docker = select_first([docker_override,"duplexa/xtea:v3"]
   call GenericTask {
     input:
       docker = docker
@@ -42,7 +43,7 @@ workflow genericworkflow {
 # TASK DEFINITIONS
 task GenericTask {
     # Command parameters
-    Array[File] input_files
+    Input_files: sample_id
     String output_dir
     String shell_command
 
