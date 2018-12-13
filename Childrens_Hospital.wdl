@@ -43,8 +43,9 @@ workflow CHSworkflow {
 task GenerateRunScript {
     # Command parameters
     File sample_id
-    File illumina_bam_list
-    Array[File] illumina_bams = read_lines(illumina_bam_list)
+    File input_bam
+#    File illumina_bam_list
+#    Array[File] illumina_bams = read_lines(illumina_bam_list)
     File hg19_decoy 
     File rep_lib_annotation
 #   File output_shell_command
@@ -62,8 +63,8 @@ task GenerateRunScript {
 
     command <<<
         set -eo pipefail
-        python gnrt_pipeline_cloud.pyc -D -o run_jobs.sh -x /usr/local/bin -x /usr/local/bin -p . -b input.bam -l 
-    >>>
+        python gnrt_pipeline_cloud.pyc -D -b ${input_bam} -p . -o run_jobs.sh -x /usr/local/bin  -l ${hg19_decoy} -r ${rep_lib_annotation} --nclip 3 --cr 2 --nd 5 --nfclip 3 --nfdisc 5 --flklen 3000 -f 19 -y 7 &&
+        >>>
 
     runtime {
         docker: docker
