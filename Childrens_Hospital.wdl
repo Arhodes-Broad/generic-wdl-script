@@ -27,27 +27,28 @@
 
 # WORKFLOW DEFINITION 
 
-workflow CHSworkflow {
+#workflow CHSworkflow {
+#
+# String? docker_override
+#  String docker = select_first("duplexa/xtea:v3")
+#  call GenerateRunScript {
+#    input:
+#      docker = docker
+#  }
 
-  String? docker_override
-  String docker = select_first("duplexa/xtea:v3")
-  call GenerateRunScript {
-    input:
-      docker = docker
-  }
-
-}
+#}
 
 
 # TASK DEFINITIONS
 task GenerateRunScript {
-    # Command parameters
+
     File sample_id
     File input_bam
-#    File illumina_bam_list
-#    Array[File] illumina_bams = read_lines(illumina_bam_list)
     File hg19_decoy 
     File rep_lib_annotation
+
+#    File illumina_bam_list
+#    Array[File] illumina_bams = read_lines(illumina_bam_list)
 #   File output_shell_command
 #   String output_dir
 #    String python_command
@@ -66,17 +67,26 @@ task GenerateRunScript {
         python gnrt_pipeline_cloud.pyc -D -b ${input_bam} -p . -o run_jobs.sh -x /usr/local/bin  -l ${hg19_decoy} -r ${rep_lib_annotation} --nclip 3 --cr 2 --nd 5 --nfclip 3 --nfdisc 5 --flklen 3000 -f 19 -y 7 &&
         >>>
 
+    #runtime {
+    #    docker: docker
+    #    memory: machine_mem + " GB"
+    #    disks: "local-disk " + select_first([disk_space_gb, 100]) + if use_ssd then " SSD" else " HDD"
+    #    cpu: select_first([cpu, 1])
+    #    preemptible: select_first([preemptible_attempts, 3])
+    #}
+    
     runtime {
-        docker: docker
-        memory: machine_mem + " GB"
-        disks: "local-disk " + select_first([disk_space_gb, 100]) + if use_ssd then " SSD" else " HDD"
-        cpu: select_first([cpu, 1])
-        preemptible: select_first([preemptible_attempts, 3])
+        disks: "local-disk 200 HDD"
+        memory: "7 GB"
+        docker: "duplexa/xteab:v3"
+        preemptible: 3
     }
 
     output {
-#        Array[Array[File]] 
         File output_shell_command = "run_jobs.sh"
     }
 }
 
+workflow CHSworkflow {
+    call GenerateRunScript {}
+}
