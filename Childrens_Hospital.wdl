@@ -64,8 +64,7 @@ task GenerateRunScript {
     command <<<
         set -eo pipefail
         python gnrt_pipeline_cloud.pyc -D -b ${input_bam} -p . -o run_jobs.sh -x /usr/local/bin  -l ${hg19_decoy} -r ${rep_lib_annotation} --nclip 3 --cr 2 --nd 5 --nfclip 3 --nfdisc 5 --flklen 3000 -f 19 -y 7 &&
-        run_jobs.sh
-    >>>
+        >>>
 
     runtime {
         docker: docker
