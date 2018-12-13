@@ -54,16 +54,15 @@ task GenerateRunScript {
 #    String python_command
 
     # Runtime parameters
-    String docker
-    Int? machine_mem_gb
-    Int machine_mem = select_first([machine_mem_gb, 7])
-    Int? disk_space_gb
-    Boolean use_ssd = false
-    Int? cpu
-    Int? preemptible_attempts
+#    String docker
+#    Int? machine_mem_gb
+#    Int machine_mem = select_first([machine_mem_gb, 7])
+#    Int? disk_space_gb
+#    Boolean use_ssd = false
+#    Int? cpu
+#    Int? preemptible_attempts
 
     command <<<
-        set -eo pipefail
         python gnrt_pipeline_cloud.pyc -D -b ${input_bam} -p . -o run_jobs.sh -x /usr/local/bin  -l ${hg19_decoy} -r ${rep_lib_annotation} --nclip 3 --cr 2 --nd 5 --nfclip 3 --nfdisc 5 --flklen 3000 -f 19 -y 7 &&
         >>>
 
