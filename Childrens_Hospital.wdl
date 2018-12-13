@@ -47,9 +47,9 @@ task GenerateRunScript {
     Array[File] illumina_bams = read_lines(illumina_bam_list)
     File hg19_decoy.tar.gz 
     File rep_lib_annotation.tar.gz
-    String output_shell_command
-    String output_dir
-    String shell_command
+  #  String output_shell_command
+  #  String output_dir
+    String python_command
 
     # Runtime parameters
     String docker
@@ -64,7 +64,7 @@ task GenerateRunScript {
         set -eo pipefail
         mv -t . ${sep=' ' input_files}
         mkdir ${output_dir}
-        ${shell_command}
+        ${python_command} > run_jobs.sh
 #        find ${output_dir} -type f > listofoutputfiles.txt
     >>>
 
@@ -78,7 +78,7 @@ task GenerateRunScript {
 
     output {
 #        Array[Array[File]] 
-#        File output_files = read_lines("listofoutputfiles.txt")
+        File output_shell_command = run_jobs.sh
     }
 }
 
