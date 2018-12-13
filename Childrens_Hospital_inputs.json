@@ -1,14 +1,7 @@
 {
-  "CHSworkflow.GenerateRunScript.preemptible_attempts": "Int? (optional)",
-  "CHSworkflow.docker": "String (optional, default = select_first(\"duplexa/xtea:v3\"))",
-  "CHSworkflow.GenerateRunScript.use_ssd": "Boolean (optional, default = false)",
-  "CHSworkflow.GenerateRunScript.disk_space_gb": "Int? (optional)",
-  "CHSworkflow.GenerateRunScript.machine_mem_gb": "Int? (optional)",
   "CHSworkflow.GenerateRunScript.hg19_decoy": "File",
-  "CHSworkflow.GenerateRunScript.cpu": "Int? (optional)",
   "CHSworkflow.GenerateRunScript.rep_lib_annotation": "File",
-  "CHSworkflow.GenerateRunScript.illumina_bam_list": "File",
-  "CHSworkflow.GenerateRunScript.sample_id": "File",
-  "CHSworkflow.docker_override": "String? (optional)"
+  "CHSworkflow.GenerateRunScript.input_bam_index": "File",
+  "CHSworkflow.GenerateRunScript.input_bam": "File"
 }
 
