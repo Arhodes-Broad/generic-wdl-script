@@ -31,7 +31,7 @@ workflow CHSworkflow {
 
   String? docker_override
   String docker = select_first("duplexa/xtea:v3")
-  call GenericTask {
+  call GenerateRunScript {
     input:
       docker = docker
   }
@@ -45,11 +45,11 @@ task GenerateRunScript {
     File sample_id
     File illumina_bam_list
     Array[File] illumina_bams = read_lines(illumina_bam_list)
-    File hg19_decoy.tar.gz 
-    File rep_lib_annotation.tar.gz
-  #  String output_shell_command
-  #  String output_dir
-    String python_command
+    File hg19_decoy 
+    File rep_lib_annotation
+#   File output_shell_command
+#   String output_dir
+#    String python_command
 
     # Runtime parameters
     String docker
@@ -62,10 +62,7 @@ task GenerateRunScript {
 
     command <<<
         set -eo pipefail
-        mv -t . ${sep=' ' input_files}
-        mkdir ${output_dir}
-        ${python_command} > run_jobs.sh
-#        find ${output_dir} -type f > listofoutputfiles.txt
+        python gnrt_pipeline_cloud.pyc -D -o run_jobs.sh -x /usr/local/bin -x /usr/local/bin -p . -b input.bam -l 
     >>>
 
     runtime {
@@ -78,7 +75,7 @@ task GenerateRunScript {
 
     output {
 #        Array[Array[File]] 
-        File output_shell_command = run_jobs.sh
+        File output_shell_command = "run_jobs.sh"
     }
 }
 
