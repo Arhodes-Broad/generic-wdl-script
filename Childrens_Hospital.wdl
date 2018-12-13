@@ -27,11 +27,10 @@
 
 # WORKFLOW DEFINITION 
 
-workflow genericworkflow {
+workflow CHSworkflow {
 
   String? docker_override
-#  String docker = select_first([docker_override, "ubuntu:14.04"])
-  String docker = select_first([docker_override,"duplexa/xtea:v3"]
+  String docker = select_first("duplexa/xtea:v3")
   call GenericTask {
     input:
       docker = docker
@@ -41,9 +40,14 @@ workflow genericworkflow {
 
 
 # TASK DEFINITIONS
-task GenericTask {
+task GenerateRunScript {
     # Command parameters
-    Input_files: sample_id
+    File sample_id
+    File illumina_bam_list
+    Array[File] illumina_bams = read_lines(illumina_bam_list)
+    File hg19_decoy.tar.gz 
+    File rep_lib_annotation.tar.gz
+    String output_shell_command
     String output_dir
     String shell_command
 
@@ -61,7 +65,7 @@ task GenericTask {
         mv -t . ${sep=' ' input_files}
         mkdir ${output_dir}
         ${shell_command}
-        find ${output_dir} -type f > listofoutputfiles.txt
+#        find ${output_dir} -type f > listofoutputfiles.txt
     >>>
 
     runtime {
@@ -73,7 +77,8 @@ task GenericTask {
     }
 
     output {
-        Array[File] output_files = read_lines("listofoutputfiles.txt")
+#        Array[Array[File]] 
+#        File output_files = read_lines("listofoutputfiles.txt")
     }
 }
 
