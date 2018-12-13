@@ -42,8 +42,9 @@
 # TASK DEFINITIONS
 task GenerateRunScript {
 
-    File sample_id
+#    File sample_id
     File input_bam
+    File input_bam_index
     File hg19_decoy 
     File rep_lib_annotation
 
