@@ -24,42 +24,19 @@
 ## for detailed licensing information pertaining to the included programs.
 
 
+
 task GenerateRunScript {
 
-#    File sample_id
     File input_bam
     File input_bam_index
     File hg19_decoy 
     File rep_lib_annotation
 
-#    File illumina_bam_list
-#    Array[File] illumina_bams = read_lines(illumina_bam_list)
-#   File output_shell_command
-#   String output_dir
-#    String python_command
-
-    # Runtime parameters
-#    String docker
-#    Int? machine_mem_gb
-#    Int machine_mem = select_first([machine_mem_gb, 7])
-#    Int? disk_space_gb
-#    Boolean use_ssd = false
-#    Int? cpu
-#    Int? preemptible_attempts
-
     command <<<
         python gnrt_pipeline_cloud.pyc -D -b ${input_bam} -p . -o run_jobs.sh -x /usr/local/bin  -l ${hg19_decoy} -r ${rep_lib_annotation} --nclip 3 --cr 2 --nd 5 --nfclip 3 --nfdisc 5 --flklen 3000 -f 19 -y 7 
         >>>
 
-    #runtime {
-    #    docker: docker
-    #    memory: machine_mem + " GB"
-    #    disks: "local-disk " + select_first([disk_space_gb, 100]) + if use_ssd then " SSD" else " HDD"
-    #    cpu: select_first([cpu, 1])
-    #    preemptible: select_first([preemptible_attempts, 3])
-    #}
-    
-    runtime {
+	runtime {
         disks: "local-disk 200 HDD"
         memory: "7 GB"
         docker: "duplexa/xteab:v3"
