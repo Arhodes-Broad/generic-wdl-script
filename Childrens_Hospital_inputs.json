@@ -1,7 +1,13 @@
-{
-  "CHSworkflow.GenerateRunScript.hg19_decoy": "File",
-  "CHSworkflow.GenerateRunScript.rep_lib_annotation": "File",
-  "CHSworkflow.GenerateRunScript.input_bam_index": "File",
-  "CHSworkflow.GenerateRunScript.input_bam": "File"
-}
+#{
+#  "CHSworkflow.GenerateRunScript.hg19_decoy": "File",
+#  "CHSworkflow.GenerateRunScript.rep_lib_annotation": "File",
+#  "CHSworkflow.GenerateRunScript.input_bam_index": "File",
+#  "CHSworkflow.GenerateRunScript.input_bam": "File"
+#}
 
+{
+  "CHSworkflow.GenerateRunScript.hg19_decoy": "gs://fc-bb08d0fb-92bf-4278-a46f-2ae47cc1a735/leelab-datafiles/hg19_decoy.tar.gz",
+  "CHSworkflow.GenerateRunScript.rep_lib_annotation": "gs://fc-bb08d0fb-92bf-4278-a46f-2ae47cc1a735/leelab-datafiles/rep_lib_annotation.tar.gz",
+  "CHSworkflow.GenerateRunScript.input_bam_index": "gs://fc-bb08d0fb-92bf-4278-a46f-2ae47cc1a735/leelab-datafiles/SSC03070.final.bai",
+  "CHSworkflow.GenerateRunScript.input_bam": "gs://fc-bb08d0fb-92bf-4278-a46f-2ae47cc1a735/leelab-datafiles/SSC03070.final.bam"
+}
