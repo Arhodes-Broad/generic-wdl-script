@@ -24,22 +24,6 @@
 ## for detailed licensing information pertaining to the included programs.
 
 
-
-# WORKFLOW DEFINITION 
-
-#workflow CHSworkflow {
-#
-# String? docker_override
-#  String docker = select_first("duplexa/xtea:v3")
-#  call GenerateRunScript {
-#    input:
-#      docker = docker
-#  }
-
-#}
-
-
-# TASK DEFINITIONS
 task GenerateRunScript {
 
 #    File sample_id
